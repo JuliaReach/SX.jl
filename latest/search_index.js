@@ -125,7 +125,7 @@ var documenterSearchIndex = {"docs": [
     "page": "About",
     "title": "Credits",
     "category": "section",
-    "text": "These persons have contributed to SX.jl (in alphabetic order):Marcelo Forets"
+    "text": "These persons have contributed to SX.jl (in alphabetic order):Marcelo Forets\nNikos Kekatos"
 },
 
 ]}
