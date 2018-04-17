@@ -33,6 +33,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "index.html#Remarks-1",
+    "page": "Home",
+    "title": "Remarks",
+    "category": "section",
+    "text": "The examples consist of single hybrid automata that are constructed via flattening (parallel composition). This can be done via SpaceEx executable file with the command spaceex -g namecfg -m namexml --output-system-file new_namexmlHowever, note that the flattening process change the original model and may induce parsing errors. The parsing errors only appear when the constructed model is visualized/analyzed with the Model Editor or/and the Web Interface. There are no parsing errors with the source code/executable SpaceEx. A list of identified parsing problems follows below. 	1. Special symbols, e.g. ~, _ in the variable and location names\n	2. Characters and symbols in the notes\n	3. Nondeterministic flows, e.g. x\'==x+w, where 0<w1<0.1 (see bball_nondet)\n	4. Nondeterministic resets, e.g. v\' == -0.75*v+w2 (see bball_nondet)\n	5. Naming issues, e.g. default variable name is component.subcomponent.variableThe aforementioned problems would yield errors/warnings when parsed.1. ERROR | in component \'osc_w_4th_order\' the string \'osc.osci.hop\'  \ndoesn\'t match NAME pattern [a-zA-Z_][a-zA-Z0-9_]* >>> element \nlabel removed \n\n2. Error: name=\"pp-always-always-always-always\" value doesn\'t match \nNAME pattern [a-zA-Z_][a-zA-Z0-9_]*>>> set to default: \"unnamed\"\n\n3. ERROR |  new LOCATION with name= \'unnamed\'; name already exist,\nrenamed in \'unnamed2\'\n\n4. ERROR: Failed to parse model file phpxbMjAb.xml.\ncaused by: Could not parse base component system.\ncaused by: Failed to parse flow of location always.\ncaused by: Could not parse predicate\n\n5. Constructed Reset: x\' == x & v\' == -0.75*v with offset \nsupport_function ( w1 >= -0.0499999 & w1 <= 0.0499999 & \nw2 >= -0.0999999 & w2 <= 0.0999999, mapped by x\' == 0 & v\' == w2 )\n\n6. Constructed Flow:  x\' == v & v\' == -0.999999 with offset \nsupport_function(x >= 0 & SLACK2 <= 0.0999999 & SLACK2 >= 0 & \nSLACK4 <= 0.199999 & SLACK4 >= 0, mapped by x\' == 0 & v\' == -SLACK2+0.0499999 ) "
+},
+
+{
     "location": "index.html#Library-Outline-1",
     "page": "Home",
     "title": "Library Outline",
