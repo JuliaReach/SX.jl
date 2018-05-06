@@ -13,7 +13,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "SX.jl",
     "category": "section",
-    "text": "DocTestFilters = [r\"[0-9\\.]+ seconds \\(.*\\)\"]SX is a Julia package to parse SpaceEx modeling files."
+    "text": "DocTestFilters = [r\"[0-9\\.]+ seconds \\(.*\\)\"]SX is a Julia package to read SpaceEx modeling files.The SpaceEx modeling language (SX) is a format for the mathematical description of hybrid dynamical systems. It has been described in The SpaceEx Modeling Language, Scott Cotton, Goran Frehse, Olivier Lebeltel. See also An Introduction to SpaceEx, Goran Frehse, 2010.A visual model editor is available for download on the SpaceEx website. See the examples in this documentation for screenshots and further details.The aim of this library is to read SX modeling files and transform them into Julia objects, for their inspection and analysis, such as reachability computations."
 },
 
 {
@@ -21,23 +21,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Features",
     "category": "section",
-    "text": "Parse SX files into types defined in Julia packages HybridSystems.jl and Systems.jl."
-},
-
-{
-    "location": "index.html#Examples-1",
-    "page": "Home",
-    "title": "Examples",
-    "category": "section",
-    "text": "The folder /examples contains a collection of model files that are available from different sources:SpaceEx webpage, small selection of examples that is part of the VM Server distribution and can be executed directly from the SpaceEx web interface."
-},
-
-{
-    "location": "index.html#Remarks-1",
-    "page": "Home",
-    "title": "Remarks",
-    "category": "section",
-    "text": "The examples consist of single hybrid automata that are constructed via flattening (parallel composition). This can be done via SpaceEx executable file with the command spaceex -g name.cfg -m name.xml --output-system-file new_name.xmlHowever, note that the flattening process change the original model and may induce parsing errors. The parsing errors only appear when the constructed model is visualized/analyzed with the Model Editor or/and the Web Interface. There are no parsing errors with the source code/executable SpaceEx. A list of identified parsing problems follows below. Special symbols, e.g. ~, _ in the variable and location names\nCharacters and symbols in the notes\nNondeterministic flows, e.g. x\'==x+w, where 0<w1<0.1 (see bball_nondet)\nNondeterministic resets, e.g. v\' == -0.75*v+w2 (see bball_nondet)\nNaming issues, e.g. default variable name is component.subcomponent.variableThe aforementioned problems would yield errors/warnings when parsed.1. ERROR | in component \'osc_w_4th_order\' the string \'osc.osci.hop\'  \ndoesn\'t match NAME pattern [a-zA-Z_][a-zA-Z0-9_]* >>> element \nlabel removed \n\n2. Error: name=\"pp-always-always-always-always\" value doesn\'t match \nNAME pattern [a-zA-Z_][a-zA-Z0-9_]*>>> set to default: \"unnamed\"\n\n3. ERROR |  new LOCATION with name= \'unnamed\'; name already exist,\nrenamed in \'unnamed2\'\n\n4. ERROR: Failed to parse model file phpxbMjAb.xml.\ncaused by: Could not parse base component system.\ncaused by: Failed to parse flow of location always.\ncaused by: Could not parse predicate\n\n5. Constructed Reset: x\' == x & v\' == -0.75*v with offset \nsupport_function ( w1 >= -0.0499999 & w1 <= 0.0499999 & \nw2 >= -0.0999999 & w2 <= 0.0999999, mapped by x\' == 0 & v\' == w2 )\n\n6. Constructed Flow:  x\' == v & v\' == -0.999999 with offset \nsupport_function(x >= 0 & SLACK2 <= 0.0999999 & SLACK2 >= 0 & \nSLACK4 <= 0.199999 & SLACK4 >= 0, mapped by x\' == 0 & v\' == -SLACK2+0.0499999 ) "
+    "text": "Parse SX files into types defined in Julia packages HybridSystems.jl and Systems.jl.\nCan read arbitrary ODEs, eg. non-linear dynamics in the ODE flow for each mode."
 },
 
 {
@@ -46,6 +30,46 @@ var documenterSearchIndex = {"docs": [
     "title": "Library Outline",
     "category": "section",
     "text": "Pages = [\n    \"lib/types.md\",\n    \"lib/methods.md\"\n]\nDepth = 2"
+},
+
+{
+    "location": "examples/examples.html#",
+    "page": "Introduction",
+    "title": "Introduction",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "examples/examples.html#Introduction-1",
+    "page": "Introduction",
+    "title": "Introduction",
+    "category": "section",
+    "text": "Pages = [\"examples.md\"]\nDepth = 3The folder /examples contains a collection of model files that are available from different sources:SpaceEx webpage, small selection of examples that is part of the VM Server distribution and can be executed directly from the SpaceEx web interface."
+},
+
+{
+    "location": "examples/examples.html#Remarks-1",
+    "page": "Introduction",
+    "title": "Remarks",
+    "category": "section",
+    "text": "The examples consist of single hybrid automata that are constructed via flattening (parallel composition). This can be done via SpaceEx executable file with the commandspaceex -g name.cfg -m name.xml --output-system-file new_name.xmlHowever, note that the flattening process changes the original model and may induce parsing errors. The parsing errors only appear when the constructed model is visualized/analyzed with the Model Editor or/and the Web Interface. There are no parsing errors with the source code/executable SpaceEx. A list of identified parsing problems follows below.Special symbols, e.g. ~, _ in the variable and location names\nSpecial characters, e.g. Greek or Russian letters\nNondeterministic flows, e.g. x\'==x+w1, where 0<w1<0.1 (see bball_nondet)\nNondeterministic resets, e.g. v\' == -0.75*v+w2 (see bball_nondet)\nNaming issues, e.g. default variable name is component.subcomponent.variableThe aforementioned problems would yield errors/warnings when parsed.1. ERROR | in component \'osc_w_4th_order\' the string \'osc.osci.hop\'  \ndoesn\'t match NAME pattern [a-zA-Z_][a-zA-Z0-9_]* >>> element\nlabel removed\n\n2. Error: name=\"pp-always-always-always-always\" value doesn\'t match\nNAME pattern [a-zA-Z_][a-zA-Z0-9_]*>>> set to default: \"unnamed\"\n\n3. ERROR |  new LOCATION with name= \'unnamed\'; name already exist,\nrenamed in \'unnamed2\'\n\n4. ERROR: Failed to parse model file phpxbMjAb.xml.\ncaused by: Could not parse base component system.\ncaused by: Failed to parse flow of location always.\ncaused by: Could not parse predicate\n\n5. Constructed Reset: x\' == x & v\' == -0.75*v with offset\nsupport_function ( w1 >= -0.0499999 & w1 <= 0.0499999 &\nw2 >= -0.0999999 & w2 <= 0.0999999, mapped by x\' == 0 & v\' == w2 )\n\n6. Constructed Flow:  x\' == v & v\' == -0.999999 with offset\nsupport_function(x >= 0 & SLACK2 <= 0.0999999 & SLACK2 >= 0 &\nSLACK4 <= 0.199999 & SLACK4 >= 0, mapped by x\' == 0 & v\' == -SLACK2+0.0499999 )"
+},
+
+{
+    "location": "examples/bball.html#",
+    "page": "Bouncing ball",
+    "title": "Bouncing ball",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "examples/bball.html#Bouncing-ball-1",
+    "page": "Bouncing ball",
+    "title": "Bouncing ball",
+    "category": "section",
+    "text": "Pages = [\"bball.md\"]\nDepth = 3(Image: Bouncing ball model)"
 },
 
 {
@@ -78,6 +102,86 @@ var documenterSearchIndex = {"docs": [
     "title": "Methods",
     "category": "section",
     "text": "This section describes systems methods implemented in SX.jl.Pages = [\"methods.md\"]\nDepth = 3CurrentModule = SX\nDocTestSetup = quote\n    using SX\nend"
+},
+
+{
+    "location": "lib/methods.html#SX.readsxmodel",
+    "page": "Methods",
+    "title": "SX.readsxmodel",
+    "category": "function",
+    "text": "readsxmodel(file; raw_dict=false, ST=ConstrainedLinearControlContinuousSystem, N=Float64, kwargs...)\n\nRead a SX model file.\n\nInput\n\nfile      – the filename of the SX file (in XML format)\nraw_dict  – (optional, default: false) if true, return the raw dictionary with                the objects that define the model (see Output below), without                actually returning a HybridSystem; otherwise, instantiate a                HybridSystem with the given assumptions\nST        – (optional, default: nothing) assumption for the type of mathematical                system for each mode\nN         – (optional, default: Float64) numeric type of the system\'s coefficients\n\nOutput\n\nHybrid system that corresponds to the given SX model and the given assumptions on the system type if raw_dict=true; otherwise, a dictionary with the Julia expression objects that define the model. The keys of this dictionary are:\n\nautomaton\nvariables\ntransitionlabels\ninvariants\nflows\nassignments\nguards\nswitchings\nnlocations\nntransitions\n\nNotes\n\nCurrently, this function makes the following assumptions:\n\nThe model contains only 1 component. If the model contains more than 1 component, an error is raised. In this case, recall that network components can be flattened using sspaceex.\nThe default and a custom ST parameter assume that all modes are of the same type. In general, you may pass a vector of system\'s types in kwargs (not implemented).\n\nMoreover, let us note that:\n\nThe tags `<notes> ... <\n\notes>` are ignored.\n\nVariable names are stored in the dictionary variables, together with other information such as if the variable is controlled or not. This dictionary is then stored in the extension field (ext) of the hybrid system.\nThe transition labels are stored in the extension field (ext) of the hybrid system.\nWe use the location \"id\" field (an integer), such that each of the vectors modes, resetmaps and switchings corresponds to the location with the given \"id\". For example, modes[1] corresponds to the mode for the location with id=\"1\".\nThe name field of a location is ignored.\nThe nature of the switchings is autonomous. If there are guards, these define state-dependent switchings only. Switching control functions are not yet implemented.\nThe resetmaps field consists of the vector of tuples (assignment, guard), for each location.\n\nThese comments apply whenever raw_dict=false:\n\nThe field variables is an ordered dictionary, where the order is given by the insertion order. This allows deterministic iteration over the dictionary, (notice that in a usual dictionary, the order in which the elements are returned does not correspond, in general, to the order in which the symbols were saved). The variables are stored in the coefficients matrix using this insertion order.\nIf ST is nothing, the modes are given as the vector of tuples (flows, invariants), each component being a list of expressions, and similarly the reset maps are the vector of tuples (assignments, guards).\n\n\n\n"
+},
+
+{
+    "location": "lib/methods.html#Input/Output-1",
+    "page": "Methods",
+    "title": "Input/Output",
+    "category": "section",
+    "text": "readsxmodel"
+},
+
+{
+    "location": "lib/methods.html#SX.count_locations_and_transitions",
+    "page": "Methods",
+    "title": "SX.count_locations_and_transitions",
+    "category": "function",
+    "text": "count_locations_and_transitions(root_sxmodel)\n\nReturns the number of locations and transitions for each component.\n\nInput\n\nroot_sxmodel – the root element of a SX file\n\nOutput\n\nTwo vectors of integers (lcount, tcount), where the i-th entry of lcount and tcount are the number of locations and transitions, respectively, of the i-th component.\n\n\n\n"
+},
+
+{
+    "location": "lib/methods.html#SX.parse_sxmath",
+    "page": "Methods",
+    "title": "SX.parse_sxmath",
+    "category": "function",
+    "text": "parse_sxmath(s; assignment=false)\n\nReturns the list of expressions corresponding to a given SX string.\n\nInput\n\ns          – string\nassignment – (optional, default: false)\n\nOutput\n\nVector of expressions, equations or inequalities.\n\nExamples\n\njulia> import SX.parse_sxmath\n\njulia> parse_sxmath(\"x >= 0\")\n1-element Array{Expr,1}:\n :(x >= 0)\n\njulia> parse_sxmath(\"x\' == x & v\' == -0.75*v\")\n2-element Array{Expr,1}:\n :(x\' = x)\n :(v\' = -0.75v)\n\njulia> parse_sxmath(\"x == 0 & v <= 0\")\n2-element Array{Expr,1}:\n :(x = 0)\n :(v <= 0)\n\nParentheses are ignored:\n\njulia> parse_sxmath(\"(x == 0) & (v <= 0)\")\n2-element Array{Expr,1}:\n :(x = 0)\n :(v <= 0)\n\nSplitting is also performend over double ampersand symbols:\n\njulia> parse_sxmath(\"x == 0 && v <= 0\")\n2-element Array{Expr,1}:\n :(x = 0)\n :(v <= 0)\n\nIf you want to parse an assignment, use the assignment flag:\n\njldoctest julia> parse_sxmath(\"x := -x*0.1\", assignment=true) 1-element Array{Expr,1}:  :(x = -x * 0.1)\n\nAlgorithm\n\nConsists of the following steps (in the given order):\n\nsplit the string with the & key, or &&\nremove trailing whitespace of each substring\nreplace double == with single =\ncast to a Julia expression with parse\n\nFor assignments, the nomenclature := is also valid and here it is replaced to =, but you need to set assignment=true for this replacement to take effect.\n\n\n\n"
+},
+
+{
+    "location": "lib/methods.html#SX.parse_sxmodel!",
+    "page": "Methods",
+    "title": "SX.parse_sxmodel!",
+    "category": "function",
+    "text": "parse_sxmodel!(root_sxmodel, HDict)\n\nInput\n\nroot_sxmodel – root element of an XML document\nHDict        – dictionary that wraps the hybrid model and contains the keys                   (automaton, variables, transitionlabels, invariants, flows,                   assignments, guards, switchings, nlocations, ntransitions)\n\nOutput\n\nThe HDict dictionary.\n\nNotes\n\nEdge labels are not used and their symbol is (arbitrarily) set to the integer 1.\nLocation identifications (\"id\" field) are assumed to be integers.\nThe switchings types are assumed to be autonomous. See Switching in Systems and Control, D. Liberzon, for further details on the classification of switchings.\nWe add fresh varaibles for each component (id_variable += 1). In general variables can be shared among components if the bindings are defined. Currently, we make the simplifying assumption that the model has only one component and we don\'t take bindings into account.\n\n\n\n"
+},
+
+{
+    "location": "lib/methods.html#SX.add_variable!",
+    "page": "Methods",
+    "title": "SX.add_variable!",
+    "category": "function",
+    "text": "add_variable!(variables, field, id=1)\n\nInput\n\nvariables – vector of symbolic variables\nfield     – an EzXML.Node node with containing information about a param field\nid        – (optional, default: 1) integer that identifies the variable\n\nOutput\n\nThe updated vector of symbolic variables.\n\nNotes\n\nParameters can be either variable names (type \"real\") or labels (type \"label\").\n\n\n\n"
+},
+
+{
+    "location": "lib/methods.html#SX.add_transition_label!",
+    "page": "Methods",
+    "title": "SX.add_transition_label!",
+    "category": "function",
+    "text": "add_transition_label!(labels, field)\n\nInput\n\nlabels – vector of transition labels\nfield  – node with a param label field\n\nOutput\n\nThe updated vector of transition labels.\n\n\n\n"
+},
+
+{
+    "location": "lib/methods.html#SX.parse_location",
+    "page": "Methods",
+    "title": "SX.parse_location",
+    "category": "function",
+    "text": "parse_location(field)\n\nInput\n\nfield  – location node\n\nOutput\n\nThe tuple (id, I, f) where id is the integer that identifies the location, I is the list of subexpressions that determine that invariant for this location, and similarly f is the list of ODEs that define the flow for this location. Both objects are vectors of symbolic expressions Expr.\n\n\n\n"
+},
+
+{
+    "location": "lib/methods.html#SX.parse_transition",
+    "page": "Methods",
+    "title": "SX.parse_transition",
+    "category": "function",
+    "text": "parse_transition(field)\n\nInput\n\nfield  – transition node\n\nOutput\n\nThe tuple (q, r, G, A) where q and r are the source mode and target mode respectively for this transition, G is the list of guards for this transition, and A is the list of assignments. G and A are vectors of symbolic expressions Expr.\n\nNotes\n\nIt is assumed that the \"source\" and \"target\" fields can be cast to integers.\n\n\n\n"
+},
+
+{
+    "location": "lib/methods.html#Parsing-the-SX-language-1",
+    "page": "Methods",
+    "title": "Parsing the SX language",
+    "category": "section",
+    "text": "SX.count_locations_and_transitions\nSX.parse_sxmath\nSX.parse_sxmodel!\nSX.add_variable!\nSX.add_transition_label!\nSX.parse_location\nSX.parse_transition"
 },
 
 {
