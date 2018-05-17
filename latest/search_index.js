@@ -21,7 +21,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Features",
     "category": "section",
-    "text": "Parse SX files into types defined in Julia packages HybridSystems.jl and Systems.jl.\nCan read arbitrary ODEs, eg. non-linear dynamics in the ODE flow for each mode."
+    "text": "Parse SX files into types defined in Julia packages HybridSystems.jl and MathematicalSystems.jl.\nCan read arbitrary ODEs, eg. non-linear dynamics in the ODE flow for each mode."
 },
 
 {
