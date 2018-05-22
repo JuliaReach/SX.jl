@@ -113,11 +113,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/methods.html#SX.linearHS",
+    "page": "Methods",
+    "title": "SX.linearHS",
+    "category": "function",
+    "text": "linearHS(HDict; ST=ConstrainedLinearControlContinuousSystem,                 STD=ConstrainedLinearControlDiscreteSystem,                 N=Float64, kwargs...)\n\nConvert the given hybrid system objects into a concrete system type for each node, and Julia expressions into SymEngine symbolic expressions.\n\nInput\n\nHDict – raw dictionary of hybrid system objects\nST    – (optional, default: ConstrainedLinearControlContinuousSystem)            assumption for the type of mathematical system for each mode\nSTD   – (optional, default: ConstrainedLinearControlDiscreteSystem)             assumption for the type of mathematical system for the assignments and guards\nN     – (optional, default: Float64) numeric type of the system\'s coefficients\n\nOutput\n\nThe tuple (modes, resetmaps).\n\nNotes\n\n\"Controlled\" variables are interpreted as state variables (there is an ODE flow  for them), otherwise these are interpreted as input variables (there is not an  ODE for them).\nIf the system has nonlinearities, then some first order derivatives cannot be evaluated to numbers, and this function does not apply. In that case, you will see the error message: ArgumentError: symbolic value cannot be evaluated to a numeric value.\nWe assume that inequalities in invariants are of the form ax <= b or ax >= b, where b is a scalar value. Other combinations are NOT yet supported.\nIn inequalities, x is a vector of variables of two differens types only: either all of them are state variables, or all of them are input variables. Other combinations are not yet allowed.\nStrict and non-strict inequalities are treated as being the same: both are mapped to half-spaces.\n\n\n\n"
+},
+
+{
     "location": "lib/methods.html#Input/Output-1",
     "page": "Methods",
     "title": "Input/Output",
     "category": "section",
-    "text": "readsxmodel"
+    "text": "readsxmodel\nlinearHS"
 },
 
 {
@@ -133,7 +141,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Methods",
     "title": "SX.parse_sxmath",
     "category": "function",
-    "text": "parse_sxmath(s; assignment=false)\n\nReturns the list of expressions corresponding to a given SX string.\n\nInput\n\ns          – string\nassignment – (optional, default: false)\n\nOutput\n\nVector of expressions, equations or inequalities.\n\nExamples\n\njulia> import SX.parse_sxmath\n\njulia> parse_sxmath(\"x >= 0\")\n1-element Array{Expr,1}:\n :(x >= 0)\n\njulia> parse_sxmath(\"x\' == x & v\' == -0.75*v\")\n2-element Array{Expr,1}:\n :(x\' = x)\n :(v\' = -0.75v)\n\njulia> parse_sxmath(\"x == 0 & v <= 0\")\n2-element Array{Expr,1}:\n :(x = 0)\n :(v <= 0)\n\nParentheses are ignored:\n\njulia> parse_sxmath(\"(x == 0) & (v <= 0)\")\n2-element Array{Expr,1}:\n :(x = 0)\n :(v <= 0)\n\nSplitting is also performend over double ampersand symbols:\n\njulia> parse_sxmath(\"x == 0 && v <= 0\")\n2-element Array{Expr,1}:\n :(x = 0)\n :(v <= 0)\n\nIf you want to parse an assignment, use the assignment flag:\n\njldoctest julia> parse_sxmath(\"x := -x*0.1\", assignment=true) 1-element Array{Expr,1}:  :(x = -x * 0.1)\n\nAlgorithm\n\nConsists of the following steps (in the given order):\n\nsplit the string with the & key, or &&\nremove trailing whitespace of each substring\nreplace double == with single =\ncast to a Julia expression with parse\n\nFor assignments, the nomenclature := is also valid and here it is replaced to =, but you need to set assignment=true for this replacement to take effect.\n\n\n\n"
+    "text": "parse_sxmath(s; assignment=false)\n\nReturns the list of expressions corresponding to a given SX string.\n\nInput\n\ns          – string\nassignment – (optional, default: false)\n\nOutput\n\nVector of expressions, equations or inequalities.\n\nExamples\n\njulia> import SX.parse_sxmath\n\njulia> parse_sxmath(\"x >= 0\")\n1-element Array{Expr,1}:\n :(x >= 0)\n\njulia> parse_sxmath(\"x\' == x & v\' == -0.75*v\")\n2-element Array{Expr,1}:\n :(x\' = x)\n :(v\' = -0.75v)\n\njulia> parse_sxmath(\"x == 0 & v <= 0\")\n2-element Array{Expr,1}:\n :(x = 0)\n :(v <= 0)\n\nParentheses are ignored:\n\njulia> parse_sxmath(\"(x == 0) & (v <= 0)\")\n2-element Array{Expr,1}:\n :(x = 0)\n :(v <= 0)\n\nSplitting is also performend over double ampersand symbols:\n\njulia> parse_sxmath(\"x == 0 && v <= 0\")\n2-element Array{Expr,1}:\n :(x = 0)\n :(v <= 0)\n\nIf you want to parse an assignment, use the assignment flag:\n\njulia> parse_sxmath(\"x := -x*0.1\", assignment=true)\n1-element Array{Expr,1}:\n :(x = -x * 0.1)\n\nCheck that we can parse expressions involving parentheses:\n\njulia> parse_sxmath(\"(t <= 125 & y>= -100)\")\n2-element Array{Expr,1}:\n :(t <= 125)\n :(y >= -100)\njulia> parse_sxmath(\"t <= 125 & (y>= -100)\")\n2-element Array{Expr,1}:\n :(t <= 125)\n :(y >= -100)\n\nAlgorithm\n\nFirst a sanity check (assertion) is made that the expression makes a coherent use of parentheses.\n\nThen, the following steps are done (in the given order):\n\nsplit the string with the & key, or &&\nremove trailing whitespace of each substring\nreplace double == with single =\ndetect unbalanced parentheses (beginning and final subexpressions) and in that case delete them\ncast to a Julia expression with parse\n\nNotes\n\nFor assignments, the nomenclature := is also valid and here it is replaced to =, but you need to set assignment=true for this replacement to take effect.\n\nThe characters \'(\' and \')\' are deleted (replaced by the empty character), whenever it is found that there are unbalanced parentheses after the expression is splitted into subexpressions.\n\n\n\n"
 },
 
 {
@@ -173,7 +181,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Methods",
     "title": "SX.parse_transition",
     "category": "function",
-    "text": "parse_transition(field)\n\nInput\n\nfield  – transition node\n\nOutput\n\nThe tuple (q, r, G, A) where q and r are the source mode and target mode respectively for this transition, G is the list of guards for this transition, and A is the list of assignments. G and A are vectors of symbolic expressions Expr.\n\nNotes\n\nIt is assumed that the \"source\" and \"target\" fields can be cast to integers.\n\n\n\n"
+    "text": "parse_transition(field)\n\nInput\n\nfield  – transition node\n\nOutput\n\nThe tuple (q, r, G, A) where q and r are the source mode and target mode respectively for this transition, G is the list of guards for this transition, and A is the list of assignments. G and A are vectors of symbolic expressions Expr.\n\nNotes\n\nIt is assumed that the \"source\" and \"target\" fields can be cast to integers.\n\nIt can happen that the given transition does not contain the \"guard\" field (or the \"assignment\", or both); in that case this function returns an empty of expressions for those cases.\n\n\n\n"
 },
 
 {
@@ -182,6 +190,38 @@ var documenterSearchIndex = {"docs": [
     "title": "Parsing the SX language",
     "category": "section",
     "text": "SX.count_locations_and_transitions\nSX.parse_sxmath\nSX.parse_sxmodel!\nSX.add_variable!\nSX.add_transition_label!\nSX.parse_location\nSX.parse_transition"
+},
+
+{
+    "location": "lib/methods.html#SX.is_halfspace",
+    "page": "Methods",
+    "title": "SX.is_halfspace",
+    "category": "function",
+    "text": "is_halfspace(expr::Expr)\n\nReturn wheter the given expression corresponds to a halfspace.\n\nInput\n\nexpr – a symbolic expression\n\nOutput\n\ntrue if expr corresponds to a halfspace or false otherwise.\n\nExamples\n\njulia> import SX.is_halfspace\n\njulia> all(is_halfspace.([:(x1 <= 0), :(x1 < 0), :(x1 > 0), :(x1 >= 0)]))\ntrue\n\njulia> is_halfspace(:(2*x1 <= 4))\ntrue\n\njulia> is_halfspace(:(6.1 <= 5.3*f - 0.1*g))\ntrue\n\njulia> is_halfspace(:(2*x1^2 <= 4))\nfalse\n\njulia> is_halfspace(:(x1^2 > 4*x2 - x3))\nfalse\n\njulia> is_halfspace(:(x1 > 4*x2 - x3))\ntrue\n\n\n\n"
+},
+
+{
+    "location": "lib/methods.html#SX.is_hyperplane",
+    "page": "Methods",
+    "title": "SX.is_hyperplane",
+    "category": "function",
+    "text": "is_hyperplane(expr::Expr)\n\nReturn wheter the given expression corresponds to a hyperplane.\n\nInput\n\nexpr – a symbolic expression\n\nOutput\n\ntrue if expr corresponds to a halfspace or false otherwise.\n\nExamples\n\njulia> import SX.is_hyperplane\n\njulia> is_hyperplane(:(x1 = 0))\ntrue\n\njulia> is_hyperplane(:(2*x1 = 4))\ntrue\n\njulia> is_hyperplane(:(6.1 = 5.3*f - 0.1*g))\ntrue\n\njulia> is_hyperplane(:(2*x1^2 = 4))\nfalse\n\njulia> is_hyperplane(:(x1^2 = 4*x2 - x3))\nfalse\n\njulia> is_hyperplane(:(x1 = 4*x2 - x3))\ntrue\n\n\n\n"
+},
+
+{
+    "location": "lib/methods.html#SX.is_linearcombination",
+    "page": "Methods",
+    "title": "SX.is_linearcombination",
+    "category": "function",
+    "text": "is_linearcombination(L::Basic)\n\nReturn whether the expression L is a linear combination of its symbols.\n\nInput\n\nL – expression\n\nOutput\n\ntrue if L is a linear combination or false otherwise.\n\nExamples\n\njulia> import SX.is_linearcombination\n\njulia> is_linearcombination(:(2*x1 - 4))\ntrue\n\njulia> is_linearcombination(:(6.1 - 5.3*f - 0.1*g))\ntrue\n\njulia> is_linearcombination(:(2*x1^2))\nfalse\n\njulia> is_linearcombination(:(x1^2 - 4*x2 + x3 + 2))\nfalse\n\n\n\n"
+},
+
+{
+    "location": "lib/methods.html#Conversion-of-symbolic-expressions-into-sets-1",
+    "page": "Methods",
+    "title": "Conversion of symbolic expressions into sets",
+    "category": "section",
+    "text": "SX.is_halfspace\nSX.is_hyperplane\nSX.is_linearcombination"
 },
 
 {
